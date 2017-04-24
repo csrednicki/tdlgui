@@ -1,0 +1,10 @@
+node_modules
+/tidal-downloader2.js
+/.sessionid_android
+/.vscode
+/nbproject
+/zapytania
+/_testcode
+/downloads/**/
+**/*.m4a
+/start.bat

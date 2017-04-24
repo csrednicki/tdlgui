@@ -1,0 +1,189 @@
+
+.navbar-form .form-control.searchbar {
+    width: 400px;
+}
+.modal-dialog {
+    width: 950px;
+}
+
+#results {
+    list-style: none;
+    width: 1200px;
+    overflow: hidden;
+    padding: 0;
+    margin: 75px auto 0;
+}
+
+.item {
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 215px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.item .albumName {
+    font-weight: bold;
+    color: #b3b3b3;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.item .artist {
+    color: gray;
+}
+
+.date {
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: white;}
+
+.popular {
+    visibility: hidden;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: white;
+}
+
+.item:hover .date {
+    visibility: visible;
+}
+
+.item:hover .popular {
+    visibility: visible;
+}
+
+.cover {
+    width: 160px;
+    height: 160px;
+    display: inline-block;
+    box-shadow: 2px 2px 10px black;
+}
+
+.item:hover .cover {
+    background: black;
+}
+
+.item:hover .cover img {
+    opacity: 0.5;
+}
+
+.download {
+    display: none;
+}
+
+.item:hover .download {
+    display: block;
+    margin: 0 auto;
+}
+
+.downloadContainer {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    right: 0;
+}
+
+#albuminfo {    
+    top: 100px;
+}
+
+#albuminfo-content {
+    overflow: hidden;
+}
+
+#cover {
+    float: left;
+    width: 320px;
+}
+
+#tracks {
+    float: left;
+    width: 550px;
+    margin-left: 20px;
+}
+
+#tracks ul {
+    list-style-type: none;
+    padding: 0;    
+}
+
+#tracklist {
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+#tracklist a {
+    color: #c8c8c8;
+    cursor: pointer;    
+}
+
+#spinner {
+    display: none;
+    vertical-align: top;
+    margin-top: 6px;    
+}
+
+#albumWindowPopularity {
+    width: 100px;
+}
+
+.popularity-label {
+    margin-right: 5px;
+}
+
+#queue-list {
+    height: 600px;
+    width: 400px;
+    overflow: hidden; 
+    overflow-y: auto;
+}
+
+#queue-list li {}
+
+#queue-list .cover {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+}
+
+#queue-list .progress {
+    width: 100px;
+    margin: 0;
+}
+
+#queue-list .title {
+    vertical-align: middle;
+}
+
+.audiojs {
+    margin-bottom: 15px;
+}
+
+.header-buttons {
+    float: right;
+    margin-right: 5px;
+}
+
+#albuminfo-title {
+    display: inline-block;
+    width: 690px;
+    height: 30px;
+    line-height: 30px;    
+}
+
+.close {
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    font-size: 35px;
+    line-height: 30px;    
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>TidalGUI</title>
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="/libs/audiojs/audio.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+  <script src="/javascripts/main.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">TidalGUI</a>
+      </div>
+
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kategorie <span class="caret"></span></a>
+          <ul class="dropdown-menu list-group" id="categories-list">
+            <li><a href="#recommended">Polecane</a></li>
+            <li><a href="#new">Nowości</a></li>
+            <li><a href="#top">Top 100</a></li>
+            <li><a href="#top-pl">Top Polskie</a></li>
+            <li><a href="#rising">Wschodzące</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gatunki <span class="caret"></span></a>
+          <ul class="dropdown-menu list-group" id="genres-list"></ul>
+        </li>
+      </ul>
+
+      <form class="navbar-form navbar-left" role="search" id="search">
+        <div class="form-group">
+          <input type="text" name="query" class="form-control searchbar" placeholder="Wpisz nazwę albumu lub wykonawcy">
+        </div>
+        <button type="submit" class="btn btn-default">Szukaj</button>
+      </form>
+
+      <ul class="nav navbar-nav">
+        <li id="spinner-wrapper">
+          <img id="spinner" src="/images/squares.svg" />
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kolejka zadań (<span id="queue-count">0</span>) <span class="caret"></span></a>
+          <ul class="dropdown-menu list-group" id="queue-list"></ul>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <div id="albuminfo" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close closeAlbumWindow" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 id="albuminfo-title" class="modal-title"></h4>
+          <div class="header-buttons btn-group btn-group-sm" role="group">
+            <button id="prevAlbum" type="button" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span> Poprzedni
+            </button>
+            <button id="nextAlbum" type="button" class="btn btn-default btn-sm">
+              Następny <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+        <div id="albuminfo-content" class="modal-body"></div>
+        <div class="modal-footer">
+          <button id="sendtoQueue" type="button" class="btn btn-primary">Dodaj album do kolejki pobierania</button>
+          <button type="button" class="btn btn-default closeAlbumWindow" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="albumInfoTpl" type="text/template">
+    <div id="cover"><img src="[[coverUrl]]"></div>
+    <div id="tracks">
+      <p>Data wydania albumu: [[albumDate]]</p>
+      <p>Czas trwania albumu: [[duration]]</p>
+      <p>Ilość utworów: [[albumTracksCount]]</p>
+      <p>[[kompilacja]]</p>
+
+      <p class="pull-left popularity-label">Popularność: </p>
+
+      <div id="albumWindowPopularity" class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[albumPopularity]]%;">[[albumPopularity]]%</div>
+      </div>
+
+      <audio preload="none"></audio>
+
+      <div id="tracklist">
+        <ul>
+
+          [[#albumTracks]]
+          <li [[^usable]]class="notusable" [[/usable]]>
+
+            [[#usable]]
+            <a href="#" data-id="[[trackId]]" data-src="">[[disc]]x[[trackNumber]]. [[title]]</a> [[/usable]] [[^usable]]
+            [[disc]]x[[trackNumber]]. [[title]] <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> [[/usable]]
+
+          </li>
+          [[/albumTracks]]
+
+        </ul>
+      </div>
+    </div>
+  </script>
+
+  <script id="albumItemTpl" type="text/template">
+    <li class="item" data-id="[[id]]">
+      <div class="cover">
+        <img src="[[cover]]">
+      </div>
+      <div class="albumName">[[album]]</div>
+      <div class="artist">[[artist]]</div>
+      <div class="date">Data wydania:<br>[[date]]</div>
+    </li>
+  </script>
+
+  <script id="queueItemTpl" type="text/template">
+    <li id="queue-item-[[trackId]]">
+      <a href="#">
+        <div class="progress pull-left">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%;">0%</div>
+        </div>
+        <img class="cover" src="[[coverUrl]]" />
+        <span class="title">[[trackNumber]]. [[title]]</span>
+      </a>
+    </li>
+  </script>
+
+  <script id="genreMenuItemTpl" type="text/template">
+    <li>
+      <a href="#[[path]]">
+        [[name]]
+      </a>
+    </li>
+  </script>
+
+  <ul id="results"></ul>
+
+</body>
+
+</html>
