@@ -5,12 +5,12 @@
   <title>TidalGUI</title>
   <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
   <link rel='stylesheet' href='/stylesheets/style.css' />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="//twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
   <script src="/libs/audiojs/audio.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
   <script src="/javascripts/main.js"></script>
 </head>
 
